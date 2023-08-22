@@ -19,4 +19,18 @@ public class ExpensesController : ControllerBase
     [HttpGet]
     public IEnumerable<ExpenseResponse> Get() => 
         _expensesService.RetrieveAll();
+
+    [HttpGet("{category}")]
+    public ActionResult<IEnumerable<ExpenseResponse>> RetrieveByCategory(string category)
+    {
+        var expenses = _expensesService.RetrieveByCategory(category);
+
+        if (expenses == null || !expenses.Any())
+        {
+            return NotFound(); // Return a 404 Not Found response if no expenses are found for the category.
+        }
+
+        return Ok(expenses); // Return the found expenses as a successful response.
+    }
+
 }

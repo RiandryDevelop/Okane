@@ -35,4 +35,15 @@ public class ExpensesService : IExpensesService
             Amount = expense.Amount,
             Category = expense.Category
         });
+
+    public IEnumerable<ExpenseResponse> RetrieveByCategory(string category)
+    {
+        return _expenses
+            .FindByCategory(category)
+            .Select(expense => new ExpenseResponse
+            {
+                Amount = expense.Amount,
+                Category = expense.Category
+            });
+    }
 }
